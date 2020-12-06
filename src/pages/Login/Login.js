@@ -13,6 +13,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
+import GoogleButton from '../../components/button/GoogleButton';
+import AppleButton from '../../components/button/AppleButton'
+
+import { signInWithGoogle } from '../../firebase/utils';
 
 function Copyright() {
   return (
@@ -40,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: 'center',
   },
   paper: {
-    margin: theme.spacing(8, 4),
+    margin: theme.spacing(6, 4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -56,26 +60,38 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  buttons: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    margin: theme.spacing(2.5, 0, 2.5),
+  },
+  googleSubmit: {
+    //margin: theme.spacing(4, 0, 2),
+  },
+  appleSubmit: {
+    //margin: theme.spacing(2, 0, 2),
+  },
 }));
 
-export default function SignUpSide() {
+export default function Login() {
   const classes = useStyles();
 
-  const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const history = useHistory()
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(sessionStorage.getItem("manufac-email") != null) alert("Email already registered!");
+    if(sessionStorage.getItem("manufac-email") !== email) alert("Email is not registered!");
+    else if(sessionStorage.getItem("manufac-password") !== password) alert("Incorrect password!");
     else{
-      sessionStorage.setItem("manufac-username", username);
       sessionStorage.setItem("manufac-email", email);
       sessionStorage.setItem("manufac-password", password);
-      alert("Sign up successful!")
-      history.push("/login")
+      alert("Login successful!")
+      history.replace("/home")
     }
   }
 
@@ -89,21 +105,9 @@ export default function SignUpSide() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Register
+            Sign in
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-              autoFocus
-            />
             <TextField
               variant="outlined"
               margin="normal"
@@ -115,6 +119,7 @@ export default function SignUpSide() {
               autoComplete="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
+              autoFocus
             />
             <TextField
               variant="outlined"
@@ -140,7 +145,7 @@ export default function SignUpSide() {
               color="primary"
               className={classes.submit}
             >
-              Sign Up
+              Sign In
             </Button>
             <Grid container>
               <Grid item xs>
@@ -149,11 +154,24 @@ export default function SignUpSide() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="login" variant="body2">
-                  {"Already have an account? Sign in"}
+                <Link href="register" variant="body2">
+                  {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
+            <div className={classes.buttons}>
+              <GoogleButton
+                variant="contained"
+                color="primary"
+                className={classes.googleSubmit}
+                onClick={signInWithGoogle}
+              ></GoogleButton>
+              <AppleButton
+                variant="contained"
+                color="primary"
+                className={classes.appleSubmit}
+              ></AppleButton>
+            </div>
             <Box mt={5}>
               <Copyright />
             </Box>
@@ -163,4 +181,3 @@ export default function SignUpSide() {
     </Grid>
   );
 }
-                  

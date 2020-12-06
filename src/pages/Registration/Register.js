@@ -58,23 +58,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide() {
+export default function Register() {
   const classes = useStyles();
 
+  const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const history = useHistory();
+  const history = useHistory()
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(sessionStorage.getItem("manufac-email") !== email) alert("Email is not registered!");
-    else if(sessionStorage.getItem("manufac-password") !== password) alert("Incorrect password!");
+    if(sessionStorage.getItem("manufac-email") != null) alert("Email already registered!");
     else{
+      sessionStorage.setItem("manufac-username", username);
       sessionStorage.setItem("manufac-email", email);
       sessionStorage.setItem("manufac-password", password);
-      alert("Login successful!")
-      history.replace("/home")
+      alert("Sign up successful!")
+      history.push("/login")
     }
   }
 
@@ -88,9 +89,21 @@ export default function SignInSide() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Register
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              autoFocus
+            />
             <TextField
               variant="outlined"
               margin="normal"
@@ -102,7 +115,6 @@ export default function SignInSide() {
               autoComplete="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              autoFocus
             />
             <TextField
               variant="outlined"
@@ -128,7 +140,7 @@ export default function SignInSide() {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Sign Up
             </Button>
             <Grid container>
               <Grid item xs>
@@ -137,8 +149,8 @@ export default function SignInSide() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="register" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="login" variant="body2">
+                  {"Already have an account? Sign in"}
                 </Link>
               </Grid>
             </Grid>
