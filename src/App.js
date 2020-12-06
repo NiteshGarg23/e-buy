@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
-import { auth } from './firebase/utils'
+import { auth, handleUserProfile } from './firebase/utils'
 
 // layouts
 import HomepageLayout from './layouts/HomepageLayout'
@@ -25,17 +25,23 @@ class App extends React.Component {
 	authListener = null;
 
 	componentDidMount(){
-		this.authListener = auth.onAuthStateChanged(userAuth => {
-			if(!userAuth){
-				this.setState({
-					...initialState
-				});
+		this.authListener = auth.onAuthStateChanged(async userAuth => {
+			if(userAuth){
+				const userRef = await handleUserProfile(userAuth);
+				userRef.onSnapshot(snapshot => {
+					this.setState({
+						currentUser: {
+							id: snapshot.id,
+							...snapshot.data()
+						}
+					})
+				})
 			};
 
 			this.setState({
-				currentUser: userAuth
+				...initialState
 			});
-		});
+		})
 	}
 
 	componentWillUnmount(){
