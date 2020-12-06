@@ -28,7 +28,7 @@ function Home(){
         <div style={styles.background}>
             
             <div class="mui--text-center">
-                <h1>Welcome to Manufac Analytics!</h1>
+                <h1>Welcome to e-buy!</h1>
                 <br />
                 <Button 
                     type="submit"
