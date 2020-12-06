@@ -12,11 +12,10 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router';
 import GoogleButton from '../../components/button/GoogleButton';
 import AppleButton from '../../components/button/AppleButton'
 
-import { signInWithGoogle } from '../../firebase/utils';
+import { signInWithGoogle, auth } from '../../firebase/utils';
 
 function Copyright() {
   return (
@@ -81,17 +80,17 @@ export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const history = useHistory();
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    if(sessionStorage.getItem("manufac-email") !== email) alert("Email is not registered!");
-    else if(sessionStorage.getItem("manufac-password") !== password) alert("Incorrect password!");
-    else{
-      sessionStorage.setItem("manufac-email", email);
-      sessionStorage.setItem("manufac-password", password);
-      alert("Login successful!")
-      history.replace("/home")
+    
+    try{
+
+      await auth.signInWithEmailAndPassword(email, password);
+      setEmail("")
+      setPassword("")
+
+    } catch(err) {
+      // console.log(err)
     }
   }
 

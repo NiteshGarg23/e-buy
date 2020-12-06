@@ -1,5 +1,4 @@
 import React from "react"
-import { useHistory } from "react-router";
 import Button from '@material-ui/core/Button';
 import { auth } from '../../firebase/utils'
 
@@ -10,7 +9,6 @@ function Home(){
 
     const handleLogout = (e) => {
         e.preventDefault();
-        //history.replace("/login");
         auth.signOut();
     }
 
