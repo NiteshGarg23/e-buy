@@ -1,17 +1,17 @@
 import React from "react"
 import { useHistory } from "react-router";
 import Button from '@material-ui/core/Button';
+import { auth } from '../../firebase/utils'
 
 // assets
 import Image from '../../assets/background.png'
 
 function Home(){
 
-    const history = useHistory()
-
     const handleLogout = (e) => {
         e.preventDefault();
-        history.replace("/login");
+        //history.replace("/login");
+        auth.signOut();
     }
 
     const styles = {

@@ -5,7 +5,7 @@ import Footer from "../components/footer/Footer"
 function HomepageLayout(props){
     return(
         <div>
-            <Header />
+            <Header {...props}/>
             {props.children}
             <Footer />
         </div>

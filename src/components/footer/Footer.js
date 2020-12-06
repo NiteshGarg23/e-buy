@@ -4,7 +4,7 @@ function Footer(){
 
     return(
         <footer>
-            <h1>Copyright --insert company name-- 2020</h1>
+            <h2>Copyright e-buy 2020</h2>
         </footer>
     );
 }
