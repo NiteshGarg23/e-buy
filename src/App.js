@@ -58,7 +58,7 @@ class App extends React.Component {
 					<Register />
 				)} />
 				<Route path = "/home" 
-					render={() => (
+					render={() => !currentUser ? <Redirect to="/login" /> : (
 						<HomepageLayout currentUser={currentUser}>
 							<Home />
 						</HomepageLayout>
