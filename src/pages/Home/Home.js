@@ -25,7 +25,7 @@ function Home(){
     return(
         <div style={styles.background}>
             
-            <div class="mui--text-center">
+            <div className="mui--text-center">
                 <h1>Welcome to e-buy!</h1>
                 <br />
                 <Button 
