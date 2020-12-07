@@ -132,6 +132,7 @@ class Register extends Component {
               <TextField
                 variant="outlined"
                 margin="normal"
+                type="email"
                 required
                 fullWidth
                 id="email"
@@ -169,9 +170,6 @@ class Register extends Component {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
                 </Grid>
                 <Grid item>
                   <Link href="login" variant="body2">

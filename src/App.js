@@ -8,6 +8,7 @@ import HomepageLayout from './layouts/HomepageLayout'
 // pages
 import Login from './pages/Login/Login'
 import Register from './pages/Registration/Register'
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import Home from './pages/Home/Home'
 
 const initialState = {
@@ -63,6 +64,10 @@ class App extends React.Component {
 				<Route path = "/register" 
 					render={() => currentUser ? <Redirect to="/home" /> : (
 					<Register />
+				)} />
+				<Route path = "/forgot-password" 
+					render={() => (
+					<ForgotPassword />
 				)} />
 				<Route path = "/home" 
 					render={() => !currentUser ? <Redirect to="/login" /> : (
