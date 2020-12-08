@@ -1,7 +1,7 @@
 import React from "react"
+import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import { auth, handleUserProfile } from './firebase/utils'
-import { connect } from 'react-redux'
 import { setCurrentUser } from './redux/User/user.actions'
 
 // layouts
@@ -31,9 +31,7 @@ class App extends React.Component {
 				})
 			};
 
-			setCurrentUser({
-				currentUser: null
-			});
+			setCurrentUser(userAuth);
 		})
 	}
 
