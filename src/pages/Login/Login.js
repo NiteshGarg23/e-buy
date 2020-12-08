@@ -95,6 +95,7 @@ export default function Login() {
       .then(() => {
         setEmail("")
         setPassword("")
+        setError("")
       })
       .catch(() => {
         alert("Invalid email or password!")
