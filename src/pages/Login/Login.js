@@ -107,6 +107,18 @@ const Login = (props) => {
     }
   }
 
+  const handleGoogleSignIn = e => {
+    e.preventDefault();
+
+    try {
+      signInWithGoogle()
+      props.history.push('/home');
+
+    } catch(err) {
+      alert("Could not sign in using google account!");
+    }
+  }
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -180,7 +192,7 @@ const Login = (props) => {
                 variant="contained"
                 color="primary"
                 className={classes.googleSubmit}
-                onClick={signInWithGoogle}
+                onClick={handleGoogleSignIn}
               ></GoogleButton>
               <AppleButton
                 variant="contained"

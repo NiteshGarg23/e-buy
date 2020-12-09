@@ -72,7 +72,7 @@ const ForgotPassword = (props) => {
     e.preventDefault();
     
     const config = {
-        url: 'http://localhost:3001/login',
+        url: 'http://localhost:3000/login',
     }
 
     try{
