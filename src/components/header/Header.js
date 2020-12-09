@@ -1,9 +1,13 @@
 import React from "react"
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
+
+const mapState = ({ user }) => ({
+    currentUser: user.currentUser
+})
 
 const Header = (props) => {
 
-    const { currentUser } = props;
+    const { currentUser } = useSelector(mapState);
 
     return(
         <header className="mui-appbar mui--z1">
@@ -26,8 +30,4 @@ Header.defaultProps = {
     currentUser: null
 }
 
-const mapStateToProps = ({ user }) => ({
-    currentUser: user.currentUser
-})
-
-export default connect(mapStateToProps, null)(Header);
+export default Header;
