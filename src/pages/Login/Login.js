@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,7 +15,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import GoogleButton from '../../components/button/GoogleButton';
 import AppleButton from '../../components/button/AppleButton'
-
 import { signInWithGoogle, auth } from '../../firebase/utils';
 
 function Copyright() {
@@ -79,12 +79,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+const Login = (props) => {
   const classes = useStyles();
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+
+  const resetFormFields = () => {
+    setEmail("")
+    setPassword("")
+    setError("")
+  }
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -92,18 +98,12 @@ export default function Login() {
     try{
 
       await auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
-        setEmail("")
-        setPassword("")
-        setError("")
-      })
-      .catch(() => {
-        alert("Invalid email or password!")
-      })
+      resetFormFields();
+      props.history.push('/home');
       
-
     } catch(err) {
       // console.log(err)
+      alert("Invalid email or password!")
     }
   }
 
@@ -197,3 +197,5 @@ export default function Login() {
     </Grid>
   );
 }
+
+export default withRouter(Login);
