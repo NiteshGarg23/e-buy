@@ -107,17 +107,22 @@ const Login = (props) => {
     }
   }
 
-  const handleGoogleSignIn = e => {
-    e.preventDefault();
+  // const handleGoogleSignIn = e => {
+  //   e.preventDefault();
 
-    try {
-      signInWithGoogle()
-      props.history.push('/home');
+  //   try {
+  //     signInWithGoogle()
+  //     .then(() => {
+  //       props.history.push('/home');
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     })
 
-    } catch(err) {
-      alert("Could not sign in using google account!");
-    }
-  }
+  //   } catch(err) {
+  //     alert("Could not sign in using google account!");
+  //   }
+  // }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -192,7 +197,7 @@ const Login = (props) => {
                 variant="contained"
                 color="primary"
                 className={classes.googleSubmit}
-                onClick={handleGoogleSignIn}
+                onClick={signInWithGoogle}
               ></GoogleButton>
               <AppleButton
                 variant="contained"
