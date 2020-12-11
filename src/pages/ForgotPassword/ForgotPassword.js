@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import { withRouter } from 'react-router-dom';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,8 +13,8 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { withRouter } from 'react-router-dom';
-import { auth } from '../../firebase/utils';
+
+import { resetPassword, resetAllAuthForms } from '../../redux/User/user.actions'
 
 function Copyright() {
   return (
@@ -62,35 +65,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const mapState = ({ user }) => ({
+  resetPasswordSuccess: user.resetPasswordSuccess,
+  resetPasswordError: user.resetPasswordError
+})
+
 const ForgotPassword = (props) => {
   const classes = useStyles();
 
-  const [email, setEmail] = useState("")
-  const [error, setError] = useState("")
+  const { resetPasswordSuccess, resetPasswordError } = useSelector(mapState);
+  const dispatch = useDispatch();
 
-  const handleSubmit = async e => {
+  const [email, setEmail] = useState("")
+  const [errors, setErrors] = useState([])
+
+  useEffect(() => {
+    if(resetPasswordSuccess){
+      alert("A password reset link has been sent to this email address")
+      dispatch(resetAllAuthForms());
+      props.history.replace("/login");
+    }
+  }, [resetPasswordSuccess])
+
+  useEffect(() => {
+    if(Array.isArray(resetPasswordError) && resetPasswordError.length > 0){
+      setErrors(resetPasswordError)
+    }
+  }, [resetPasswordError])
+
+  const handleSubmit = e => {
     e.preventDefault();
     
-    const config = {
-        url: 'http://localhost:3000/login',
-    }
-
-    try{
-
-      await auth.sendPasswordResetEmail (email, config)
-      .then(() => {
-        setError("")
-        alert("A password reset link has been sent to this email address")
-        props.history.replace("/login");
-      })
-      .catch(() => {
-        setError("Email not registered with us!");
-      })
-    //   setEmail("")
-
-    } catch(err) {
-      // console.log(err)
-    }
+    dispatch(resetPassword({ email }));
   }
 
   return (
@@ -108,7 +114,17 @@ const ForgotPassword = (props) => {
           
           <form className={classes.form} onSubmit={handleSubmit}>
             <div className={classes.error}>
-                {error}
+              {errors.length > 0 && (
+                <ul>
+                  {errors.map((err, index) => {
+                    return(
+                      <li key={index}>
+                        {err}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
             </div>
             <TextField
               variant="outlined"

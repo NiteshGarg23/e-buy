@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,7 +16,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { auth, handleUserProfile } from '../../firebase/utils'
+import { signUpUser, resetAllAuthForms } from '../../redux/User/user.actions'
 
 function Copyright() {
   return (
@@ -60,12 +62,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const mapState = ({ user }) => ({
+  signUpSuccess: user.signUpSuccess
+})
+
 const Register = (props) => {
   const classes = useStyles();
+
+  const { signUpSuccess } = useSelector(mapState);
+  const dispatch = useDispatch();
 
   const [displayName, setDisplayName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  useEffect(() => {
+    if(signUpSuccess){
+      resetFormFields();
+      dispatch(resetAllAuthForms());
+      props.history.push('/home')
+    }
+    
+  }, [signUpSuccess])
 
   const resetFormFields = () => {
     setDisplayName("")
@@ -73,19 +91,10 @@ const Register = (props) => {
     setPassword("")
   }
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
     
-    try{
-      
-      const { user } = await auth.createUserWithEmailAndPassword(email, password);
-      await handleUserProfile(user, { displayName });
-      resetFormFields();
-      props.history.push('/home')
-
-    } catch(err) {
-      console.log(err);
-    }
+    dispatch(signUpUser({ displayName, email, password }));
   }
 
   return (
@@ -104,6 +113,7 @@ const Register = (props) => {
             <TextField
               variant="outlined"
               margin="normal"
+              required
               fullWidth
               id="displayName"
               label="Display name"

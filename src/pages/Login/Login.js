@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,9 +15,11 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+
 import GoogleButton from '../../components/button/GoogleButton';
 import AppleButton from '../../components/button/AppleButton'
-import { signInWithGoogle, auth } from '../../firebase/utils';
+
+import { signInUser, signInWithGoogle, resetAllAuthForms } from '../../redux/User/user.actions'
 
 function Copyright() {
   return (
@@ -79,12 +83,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const mapState = ({ user }) => ({
+  signInSuccess: user.signInSuccess
+});
+
 const Login = (props) => {
   const classes = useStyles();
+
+  const { signInSuccess } = useSelector(mapState);
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+
+  useEffect(() => {
+    if(signInSuccess){
+      resetFormFields();
+      dispatch(resetAllAuthForms());
+      props.history.push('/home');
+    }
+  }, [signInSuccess])
 
   const resetFormFields = () => {
     setEmail("")
@@ -92,31 +111,14 @@ const Login = (props) => {
     setError("")
   }
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
     
-    try{
-
-      await auth.signInWithEmailAndPassword(email, password)
-      resetFormFields();
-      props.history.push('/home');
-      
-    } catch(err) {
-      // console.log(err)
-      alert("Invalid email or password!")
-    }
+    dispatch(signInUser({ email, password }));
   }
 
-  const handleGoogleSignIn = e => {
-    e.preventDefault();
-
-    try {
-      signInWithGoogle()
-      props.history.push('/home');
-
-    } catch(err) {
-      alert("Could not sign in using google account!");
-    }
+  const handleGoogleSignIn = () => {
+    dispatch(signInWithGoogle());
   }
 
   return (
