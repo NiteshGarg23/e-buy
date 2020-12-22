@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Avatar from '@material-ui/core/Avatar';
@@ -19,7 +19,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import GoogleButton from '../../components/button/GoogleButton';
 import AppleButton from '../../components/button/AppleButton'
 
-import { signInUser, signInWithGoogle, resetAllAuthForms } from '../../redux/User/user.actions'
+import { emailSignInStart, googleSignInStart } from '../../redux/User/user.actions'
 
 function Copyright() {
   return (
@@ -84,13 +84,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const mapState = ({ user }) => ({
-  signInSuccess: user.signInSuccess
+  currentUser: user.currentUser
 });
 
 const Login = (props) => {
   const classes = useStyles();
-
-  const { signInSuccess } = useSelector(mapState);
+  const history = useHistory();
+  const { currentUser } = useSelector(mapState);
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("")
@@ -98,12 +98,11 @@ const Login = (props) => {
   const [error, setError] = useState("")
 
   useEffect(() => {
-    if(signInSuccess){
+    if(currentUser){
       resetFormFields();
-      dispatch(resetAllAuthForms());
-      props.history.push('/home');
+      history.push('/home');
     }
-  }, [signInSuccess])
+  }, [currentUser])
 
   const resetFormFields = () => {
     setEmail("")
@@ -114,11 +113,11 @@ const Login = (props) => {
   const handleSubmit = e => {
     e.preventDefault();
     
-    dispatch(signInUser({ email, password }));
+    dispatch(emailSignInStart({ email, password }));
   }
 
   const handleGoogleSignIn = () => {
-    dispatch(signInWithGoogle());
+    dispatch(googleSignInStart());
   }
 
   return (
@@ -212,4 +211,4 @@ const Login = (props) => {
   );
 }
 
-export default withRouter(Login);
+export default Login;

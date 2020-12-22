@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -14,7 +14,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { resetPassword, resetAllAuthForms } from '../../redux/User/user.actions'
+import { resetPasswordStart, resetUserState } from '../../redux/User/user.actions'
 
 function Copyright() {
   return (
@@ -67,13 +67,12 @@ const useStyles = makeStyles((theme) => ({
 
 const mapState = ({ user }) => ({
   resetPasswordSuccess: user.resetPasswordSuccess,
-  resetPasswordError: user.resetPasswordError
 })
 
 const ForgotPassword = (props) => {
   const classes = useStyles();
-
-  const { resetPasswordSuccess, resetPasswordError } = useSelector(mapState);
+  const history = useHistory();
+  const { resetPasswordSuccess } = useSelector(mapState);
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("")
@@ -81,22 +80,21 @@ const ForgotPassword = (props) => {
 
   useEffect(() => {
     if(resetPasswordSuccess){
-      alert("A password reset link has been sent to this email address")
-      dispatch(resetAllAuthForms());
-      props.history.replace("/login");
+      dispatch(resetUserState())
+      history.replace("/login");
     }
   }, [resetPasswordSuccess])
 
-  useEffect(() => {
-    if(Array.isArray(resetPasswordError) && resetPasswordError.length > 0){
-      setErrors(resetPasswordError)
-    }
-  }, [resetPasswordError])
+  // useEffect(() => {
+  //   if(Array.isArray(resetPasswordError) && resetPasswordError.length > 0){
+  //     setErrors(resetPasswordError)
+  //   }
+  // }, [resetPasswordError])
 
   const handleSubmit = e => {
     e.preventDefault();
     
-    dispatch(resetPassword({ email }));
+    dispatch(resetPasswordStart({ email }));
   }
 
   return (
@@ -113,7 +111,7 @@ const ForgotPassword = (props) => {
           </Typography>
           
           <form className={classes.form} onSubmit={handleSubmit}>
-            <div className={classes.error}>
+            {/* <div className={classes.error}>
               {errors.length > 0 && (
                 <ul>
                   {errors.map((err, index) => {
@@ -125,7 +123,7 @@ const ForgotPassword = (props) => {
                   })}
                 </ul>
               )}
-            </div>
+            </div> */}
             <TextField
               variant="outlined"
               margin="normal"
@@ -168,4 +166,4 @@ const ForgotPassword = (props) => {
   );
 }
 
-export default withRouter(ForgotPassword);
+export default ForgotPassword;

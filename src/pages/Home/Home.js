@@ -1,15 +1,16 @@
 import React from "react"
+import { useDispatch } from 'react-redux'
 import Button from '@material-ui/core/Button';
-import { auth } from '../../firebase/utils'
+import { signOutUserStart } from '../../redux/User/user.actions'
 
 // assets
 import Image from '../../assets/background.png'
 
-function Home(){
+const Home = (props) => {
+    const dispatch = useDispatch();
 
-    const handleLogout = (e) => {
-        e.preventDefault();
-        auth.signOut();
+    const signOut = () => {
+        dispatch(signOutUserStart());
     }
 
     const styles = {
@@ -32,7 +33,7 @@ function Home(){
                     type="submit"
                     variant="contained"
                     color="primary"
-                    onClick={handleLogout}
+                    onClick={() => signOut()}
                 >
                     Logout 
                 </Button>
