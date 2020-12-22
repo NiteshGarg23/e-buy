@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Avatar from '@material-ui/core/Avatar';
@@ -16,7 +16,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { signUpUser, resetAllAuthForms } from '../../redux/User/user.actions'
+import { signUpUserStart } from '../../redux/User/user.actions'
 
 function Copyright() {
   return (
@@ -63,13 +63,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const mapState = ({ user }) => ({
-  signUpSuccess: user.signUpSuccess
+  currentUser: user.currentUser
 })
 
 const Register = (props) => {
   const classes = useStyles();
-
-  const { signUpSuccess } = useSelector(mapState);
+  const history = useHistory();
+  const { currentUser } = useSelector(mapState);
   const dispatch = useDispatch();
 
   const [displayName, setDisplayName] = useState("")
@@ -77,13 +77,12 @@ const Register = (props) => {
   const [password, setPassword] = useState("")
 
   useEffect(() => {
-    if(signUpSuccess){
+    if(currentUser){
       resetFormFields();
-      dispatch(resetAllAuthForms());
-      props.history.push('/home')
+      history.push('/home')
     }
     
-  }, [signUpSuccess])
+  }, [currentUser])
 
   const resetFormFields = () => {
     setDisplayName("")
@@ -94,7 +93,7 @@ const Register = (props) => {
   const handleSubmit = e => {
     e.preventDefault();
     
-    dispatch(signUpUser({ displayName, email, password }));
+    dispatch(signUpUserStart({ displayName, email, password }));
   }
 
   return (
@@ -181,4 +180,4 @@ const Register = (props) => {
   );
 }
 
-export default withRouter(Register);
+export default Register;
