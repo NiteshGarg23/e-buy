@@ -8,6 +8,7 @@ const mapState = ({ user }) => ({
 const Header = (props) => {
 
   const { currentUser } = useSelector(mapState);
+  const displayName = currentUser ? currentUser.displayName : " ";
 
   return(
     <header className="mui-appbar mui--z1">
@@ -16,7 +17,7 @@ const Header = (props) => {
           <tbody>
             <tr className="mui--appbar-height">
               <td className="mui--text-title">
-                <h2>Hello {currentUser.displayName}</h2>
+                <h2>Hello {displayName}</h2>
               </td>
             </tr>
           </tbody>
