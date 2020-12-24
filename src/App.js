@@ -1,10 +1,14 @@
-import React, { useEffect } from "react"
+import React, { Fragment, useEffect } from "react"
 import { useDispatch } from 'react-redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { checkUserSession } from './redux/User/user.actions'
+
+// components
+import AdminToolBar from './components/adminToolBar/AdminToolBar'
 
 // hoc
 import WithAuth from './hoc/withAuth'
+import WithAdminAuth from './hoc/withAdminAuth'
 
 // layouts
 import HomepageLayout from './layouts/HomepageLayout'
@@ -14,7 +18,7 @@ import Login from './pages/Login/Login'
 import Register from './pages/Registration/Register'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import Home from './pages/Home/Home'
-
+import Admin from './pages/Admin/Admin'
 
 const App = (props) => {
 	const dispatch = useDispatch();
@@ -25,6 +29,8 @@ const App = (props) => {
 
 	return (
 		<Router>
+		<AdminToolBar />
+		<Switch>
 			<Route exact path = "/" render={() => (
 				<Register />
 			)} />
@@ -45,6 +51,14 @@ const App = (props) => {
 					</HomepageLayout>
 				</WithAuth>
 			)} />
+			<Route path = "/admin" render={() => (
+				<WithAdminAuth>
+					<HomepageLayout>
+						<Admin />
+					</HomepageLayout>
+				</WithAdminAuth>
+			)} />
+		</Switch>
 		</Router>
 	)
 }
