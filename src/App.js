@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react"
+import React, { useEffect } from "react"
 import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { checkUserSession } from './redux/User/user.actions'
@@ -12,6 +12,7 @@ import WithAdminAuth from './hoc/withAdminAuth'
 
 // layouts
 import HomepageLayout from './layouts/HomepageLayout'
+import AdminpageLayout from './layouts/AdminpageLayout'
 
 // pages
 import Login from './pages/Login/Login'
@@ -53,9 +54,9 @@ const App = (props) => {
 			)} />
 			<Route path = "/admin" render={() => (
 				<WithAdminAuth>
-					<HomepageLayout>
+					<AdminpageLayout>
 						<Admin />
-					</HomepageLayout>
+					</AdminpageLayout>
 				</WithAdminAuth>
 			)} />
 		</Switch>

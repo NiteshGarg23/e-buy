@@ -1,9 +1,14 @@
 import React from 'react';
+import AddProduct from '../../components/addProducts/AddProduct'
+import FetchProducts from '../../components/fetchProducts/FetchProducts'
 
 const Admin = () => {
     return(
         <div>
-            <h1>Admin page</h1>
+            <AddProduct />
+            <br />
+            <h3>All products</h3>
+            <FetchProducts />
         </div>
     )
 }

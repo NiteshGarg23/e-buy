@@ -1,14 +1,20 @@
 import React from "react"
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import Button from '@material-ui/core/Button';
+import { signOutUserStart } from '../../redux/User/user.actions'
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser
 })
 
 const Header = (props) => {
-
+  const dispatch = useDispatch();
   const { currentUser } = useSelector(mapState);
   const displayName = currentUser ? currentUser.displayName : " ";
+
+  const signOut = () => {
+    dispatch(signOutUserStart());
+  }
 
   return(
     <header className="mui-appbar mui--z1">
@@ -18,6 +24,16 @@ const Header = (props) => {
             <tr className="mui--appbar-height">
               <td className="mui--text-title">
                 <h2>Hello {displayName}</h2>
+              </td>
+              <td>
+                <Button 
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  onClick={() => signOut()}
+                >
+                  Logout 
+                </Button>
               </td>
             </tr>
           </tbody>
