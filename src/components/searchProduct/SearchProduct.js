@@ -1,37 +1,20 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchProductsStart, deleteProductStart } from '../../redux/Products/products.actions'
-import './fetchProducts.scss'
-
+import React from 'react';
+import { useSelector } from 'react-redux'
 import Button from '@material-ui/core/Button';
 
 const mapState = ({ productsData }) => ({
     products: productsData.products
 });
 
-
-const FetchProducts = (props) => {
+const SearchProducts = (props) => {
     const { products } = useSelector(mapState);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(
-          fetchProductsStart()
-        );
     
-    }, [])
-
-    const deleteProduct = (documentID) => {
-        // e.preventDefault();
-        dispatch(deleteProductStart(documentID));
-    }
-
     if(!Array.isArray(products)) return null;
     if(products.length < 1){
         return(
             <div className="productsList">
                 <p>
-                    No products!
+                    No search results
                 </p>
             </div>
         )
@@ -74,16 +57,8 @@ const FetchProducts = (props) => {
                                                 <Button 
                                                     variant="contained"
                                                     color="primary"
-                                                    onClick={() => {
-                                                        const canDelete = window.confirm(
-                                                            "Do you really want to remove this?"
-                                                        )
-                                                        if(canDelete){
-                                                            deleteProduct(documentID)}
-                                                        }
-                                                    }
                                                 >
-                                                    Delete
+                                                    Add to cart
                                                 </Button>
                                             </td>
                                         </tr>
@@ -98,4 +73,4 @@ const FetchProducts = (props) => {
     )
 }
 
-export default FetchProducts;
+export default SearchProducts;

@@ -16,10 +16,14 @@ export const handleAddProduct = product => {
     })
 }
 
-export const handleFetchProducts = () => {
+export const handleFetchProducts = (searchValue) => {
     return new Promise((resolve, reject) => {
-        firestore
-        .collection('products')
+        
+        let ref = firestore.collection('products').orderBy('createdAt')
+        
+        if(searchValue) ref = ref.where('productName', "==", searchValue)
+
+        ref
         .get()
         .then(snapshot => {
             const productsArray = snapshot.docs.map(doc => {
@@ -28,7 +32,6 @@ export const handleFetchProducts = () => {
                     documentID: doc.id
                 }
             });
-            console.log(productsArray)
             resolve(productsArray);
         })
         .catch(err => {
