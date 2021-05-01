@@ -20,6 +20,7 @@ import Register from './pages/Registration/Register'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import Home from './pages/Home/Home'
 import Admin from './pages/Admin/Admin'
+import Search from './pages/Search/Search'
 
 const App = (props) => {
 	const dispatch = useDispatch();
@@ -34,6 +35,11 @@ const App = (props) => {
 		<Switch>
 			<Route exact path = "/" render={() => (
 				<Register />
+			)} />
+			<Route exact path = "/search" render={() => (
+				<HomepageLayout>
+					<Search />
+				</HomepageLayout>
 			)} />
 			<Route path = "/login" render={() => (
 				<Login />

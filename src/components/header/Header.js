@@ -1,7 +1,9 @@
 import React from "react"
 import { useSelector, useDispatch } from 'react-redux'
-import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom'
 import { signOutUserStart } from '../../redux/User/user.actions'
+
+import Button from '@material-ui/core/Button';
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser
@@ -24,6 +26,26 @@ const Header = (props) => {
             <tr className="mui--appbar-height">
               <td className="mui--text-title">
                 <h2>Hello {displayName}</h2>
+              </td>
+              <td>
+                <Link to='/home'>
+                  <Button 
+                    variant="contained"
+                    color="primary"
+                  >
+                    Home 
+                  </Button>
+                </Link>
+              </td>
+              <td>
+                <Link to='/search'>
+                  <Button 
+                    variant="contained"
+                    color="primary"
+                  >
+                    Search 
+                  </Button>
+                </Link>
               </td>
               <td>
                 <Button 
