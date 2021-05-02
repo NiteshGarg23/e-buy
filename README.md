@@ -6,15 +6,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `yarn install`
+`yarn install`
 
-
-### `yarn add firebase-tools`
-### `yarn add ckeditor`
-### `yarn add @material-ui/core`
-### `yarn add moment`
-### `yarn add react-country-region-selector`
-### `yarn add stripe`
+`yarn add firebase-tools`
+`yarn add ckeditor`
+`yarn add @material-ui/core`
+`yarn add moment`
+`yarn add react-country-region-selector`
+`yarn add stripe`
 
 Installs dependencies
 
