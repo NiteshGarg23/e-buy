@@ -1,4 +1,4 @@
-e-buy is an ecommerce website built using react, redux and firebase.
+## e-buy is an ecommerce website built using react, redux and firebase.
 
 # Getting Started with Create React App
 
