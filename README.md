@@ -8,12 +8,12 @@ In the project directory, you can run:
 
 `yarn install`
 
-`yarn add firebase-tools`
-`yarn add ckeditor`
-`yarn add @material-ui/core`
-`yarn add moment`
-`yarn add react-country-region-selector`
-`yarn add stripe`
+`yarn add firebase-tools`\
+`yarn add ckeditor`\
+`yarn add @material-ui/core`\
+`yarn add moment`\
+`yarn add react-country-region-selector`\
+`yarn add stripe`\
 
 Installs dependencies
 
@@ -22,5 +22,5 @@ Installs dependencies
 Start the project
 
 
-Add firebase config object
+Add firebase config object\
 Add stripe publishable-key and secret-key
