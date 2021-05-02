@@ -8,12 +8,20 @@ In the project directory, you can run:
 
 ### `yarn install`
 
+
+### `yarn add firebase-tools`
+### `yarn add ckeditor`
+### `yarn add @material-ui/core`
+### `yarn add moment`
+### `yarn add react-country-region-selector`
+### `yarn add stripe`
+
 Installs dependencies
 
 ### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Start the project
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+
+Add firebase config object
+Add stripe publishable-key and secret-key
