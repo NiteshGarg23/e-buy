@@ -13,14 +13,14 @@ In the project directory, you can run:
 `yarn add @material-ui/core`\
 `yarn add moment`\
 `yarn add react-country-region-selector`\
-`yarn add stripe`\
+`yarn add stripe`
 
-Installs dependencies
+Install dependencies
 
 ### `yarn start`
 
 Start the project
 
-
+\
 Add firebase config object\
 Add stripe publishable-key and secret-key
