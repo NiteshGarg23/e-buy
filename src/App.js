@@ -1,73 +1,120 @@
-import React, { useEffect } from "react"
-import { useDispatch } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { checkUserSession } from './redux/User/user.actions'
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
+import { checkUserSession } from './redux/User/user.actions';
 
 // components
-import AdminToolBar from './components/adminToolBar/AdminToolBar'
+import AdminToolbar from './components/AdminToolbar';
 
 // hoc
-import WithAuth from './hoc/withAuth'
-import WithAdminAuth from './hoc/withAdminAuth'
+import WithAuth from './hoc/withAuth';
+import WithAdminAuth from './hoc/withAdminAuth';
 
 // layouts
-import HomepageLayout from './layouts/HomepageLayout'
-import AdminpageLayout from './layouts/AdminpageLayout'
+import MainLayout from './layouts/MainLayout';
+import HomepageLayout from './layouts/HomepageLayout';
+import AdminLayout from './layouts/AdminLayout';
+import DashboardLayout from './layouts/DashboardLayout';
 
 // pages
-import Login from './pages/Login/Login'
-import Register from './pages/Registration/Register'
-import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
-import Home from './pages/Home/Home'
-import Admin from './pages/Admin/Admin'
-import Search from './pages/Search/Search'
+import Homepage from './pages/Homepage';
+import Search from './pages/Search';
+import Registration from './pages/Registration';
+import Login from './pages/Login';
+import Recovery from './pages/Recovery';
+import Dashboard from './pages/Dashboard';
+import Admin from './pages/Admin';
+import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
+import Payment from './pages/Payment';
+import Order from './pages/Order';
+import './default.scss';
 
-const App = (props) => {
-	const dispatch = useDispatch();
+const App = props => {
+  const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(checkUserSession())
-	}, [])
+  useEffect(() => {
+    dispatch(checkUserSession());
 
-	return (
-		<Router>
-		<AdminToolBar />
-		<Switch>
-			<Route exact path = "/" render={() => (
-				<Register />
-			)} />
-			<Route exact path = "/search" render={() => (
-				<HomepageLayout>
-					<Search />
-				</HomepageLayout>
-			)} />
-			<Route path = "/login" render={() => (
-				<Login />
-			)} />
-			<Route path = "/register" render={() => (
-				<Register />
-			)} />
-			<Route path = "/forgot-password" 
-				render={() => (
-				<ForgotPassword />
-			)} />
-			<Route path = "/home" render={() => (
-				<WithAuth>
-					<HomepageLayout>
-						<Home />
-					</HomepageLayout>
-				</WithAuth>
-			)} />
-			<Route path = "/admin" render={() => (
-				<WithAdminAuth>
-					<AdminpageLayout>
-						<Admin />
-					</AdminpageLayout>
-				</WithAdminAuth>
-			)} />
-		</Switch>
-		</Router>
-	)
+  }, []);
+
+  return (
+    <div className="App">
+      <AdminToolbar />
+      <Switch>
+        <Route exact path="/" render={() => (
+          <HomepageLayout>
+            <Homepage />
+          </HomepageLayout>
+        )}
+        />
+        <Route exact path="/search" render={() => (
+          <MainLayout>
+            <Search />
+          </MainLayout>
+        )} />
+        <Route path="/search/:filterType" render={() => (
+          <MainLayout>
+            <Search />
+          </MainLayout>
+        )} />
+        <Route path="/product/:productID" render={() => (
+          <MainLayout>
+            <ProductDetails />
+          </MainLayout>
+        )} />
+        <Route path="/cart" render={() => (
+          <MainLayout>
+            <Cart />
+          </MainLayout>
+        )} />
+        <Route path="/payment" render={() => (
+          <WithAuth>
+            <MainLayout>
+              <Payment />
+            </MainLayout>
+          </WithAuth>
+        )} />
+        <Route path="/registration" render={() => (
+          <MainLayout>
+            <Registration />
+          </MainLayout>
+        )} />
+        <Route path="/login"
+          render={() => (
+            <MainLayout>
+              <Login />
+            </MainLayout>
+          )} />
+        <Route path="/recovery" render={() => (
+          <MainLayout>
+            <Recovery />
+          </MainLayout>
+        )} />
+        <Route path="/dashboard" render={() => (
+          <WithAuth>
+            <DashboardLayout>
+              <Dashboard />
+            </DashboardLayout>
+          </WithAuth>
+        )} />
+        <Route path="/order/:orderID" render={() => (
+          <WithAuth>
+            <DashboardLayout>
+              <Order />
+            </DashboardLayout>
+          </WithAuth>
+        )} />
+        <Route path="/admin" render={() => (
+          <WithAdminAuth>
+            <AdminLayout>
+              <Admin />
+            </AdminLayout>
+          </WithAdminAuth>
+        )} />
+      </Switch>
+    </div>
+  );
 }
 
 export default App;
