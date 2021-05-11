@@ -4,14 +4,6 @@ e-buy is an ecommerce website built using react, redux and firebase. Users can b
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Dependencies
-
-firebase-tools\
-ckeditor\
-@material-ui\
-moment\
-react-country-region-selector\
-stripe
 
 ## Available Scripts
 
