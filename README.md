@@ -4,25 +4,23 @@ e-buy is an ecommerce website built using react, redux and firebase. Users can b
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Dependencies
+
+firebase-tools
+ckeditor
+@material-ui
+moment
+react-country-region-selector
+stripe
+
 ## Available Scripts
 
 In the project directory, you can run:
 
-`yarn install`
-
-`yarn add firebase-tools`\
-`yarn add ckeditor`\
-`yarn add @material-ui/core`\
-`yarn add moment`\
-`yarn add react-country-region-selector`\
-`yarn add stripe`
+### `yarn install`
 
 Install dependencies
 
 ### `yarn start`
 
 Start the project
-
-\
-Add firebase config object\
-Add stripe publishable-key and secret-key
